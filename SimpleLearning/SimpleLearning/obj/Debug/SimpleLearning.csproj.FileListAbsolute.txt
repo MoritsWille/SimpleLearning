@@ -1,0 +1,6 @@
+C:\wamp\www\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.exe.config
+C:\wamp\www\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.exe
+C:\wamp\www\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.pdb
+C:\wamp\www\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.exe
+C:\wamp\www\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.pdb
+C:\wamp\www\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.csprojResolveAssemblyReference.cache
