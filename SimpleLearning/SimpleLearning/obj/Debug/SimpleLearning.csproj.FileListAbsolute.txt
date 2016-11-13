@@ -4,3 +4,9 @@ C:\wamp\www\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.pdb
 C:\wamp\www\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.exe
 C:\wamp\www\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.pdb
 C:\wamp\www\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.csprojResolveAssemblyReference.cache
+C:\Users\Morits Wille\Documents\GitHub\SimpleLearning\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.exe.config
+C:\Users\Morits Wille\Documents\GitHub\SimpleLearning\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.pdb
+C:\Users\Morits Wille\Documents\GitHub\SimpleLearning\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.exe
+C:\Users\Morits Wille\Documents\GitHub\SimpleLearning\SimpleLearning\SimpleLearning\bin\Debug\SimpleLearning.pdb
+C:\Users\Morits Wille\Documents\GitHub\SimpleLearning\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.csprojResolveAssemblyReference.cache
+C:\Users\Morits Wille\Documents\GitHub\SimpleLearning\SimpleLearning\SimpleLearning\obj\Debug\SimpleLearning.exe
