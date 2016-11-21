@@ -11,25 +11,28 @@ namespace SimpleLearning
 {
     public class Neuron
     {
-        public string Name;
-        public List<Weight> Weights;
-        public float Value;
+        public Weight[] Weights;
+        public double Value;
 
-        public static  void Save(Neuron neuron, string path)
+        public static void Save(Neuron[] neuron, string path)
         {   
             string data = JsonConvert.SerializeObject(neuron);
             File.WriteAllText(path, data);
         }
 
-        public static Neuron Randomize(Neuron neuron)
+        public static Neuron[] Randomize(Neuron[] neurons)
         {
             Random random = new Random();
-            foreach (Weight weight in neuron.Weights)
+            for (int e = 0; e < neurons.Length; e++)
             {
-                weight.WeightValue = random.Next(-100, 100) / 100;
+                for (int i = 0; i < neurons[e].Weights.Length; ++i)
+                {
+                    neurons[e].Weights[i] = new Weight();
+                    neurons[e].Weights[i].WeightValue = random.NextDouble() * 2.0 - 1.0;
+                }
             }
 
-            return neuron;
+            return neurons;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SimpleLearning
 {
     public class Weight
     {
-        public float WeightValue;
-        public float WeightDerivative;
+        public double WeightValue;
+        public float DeltaWeight;
     }
 }

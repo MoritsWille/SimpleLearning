@@ -15,6 +15,13 @@ namespace SimpleLearning
     {
         static void Main(string[] args)
         {
+            XOR xor = new XOR();
+            for (int i = 0; i < xor.Calculate().Length; ++i)
+            {
+                Console.WriteLine(xor.Calculate()[i]);
+            }
+
+            Console.ReadKey();
         }
     }
 }
