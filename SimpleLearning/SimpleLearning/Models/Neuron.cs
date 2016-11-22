@@ -34,5 +34,10 @@ namespace SimpleLearning
 
             return neurons;
         }
+
+        public void Activate()
+        {
+            Value = 1 / (1 + Math.Pow(Math.E, -Value));
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace SimpleLearning
 {
     interface INeuralNetwork
     {
-        int[] Calculate();
-        void CalculateAndLearn();
+        int Calculate();
+        double[] CalculateAndLearn();
     }
 }

@@ -9,6 +9,12 @@ namespace SimpleLearning
     public class Weight
     {
         public double WeightValue;
-        public float DeltaWeight;
+        public double DeltaWeight;
+
+        public void Update(double LearningRate)
+        {
+            WeightValue -= LearningRate * DeltaWeight; 
+        }
+
     }
 }

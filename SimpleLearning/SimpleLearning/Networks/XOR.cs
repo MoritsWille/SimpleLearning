@@ -14,6 +14,7 @@ namespace SimpleLearning
         Neuron[] _neuron;
         string _learningSetPath;
         string _neuronPath;
+        public double learningRate = 0.01;
 
         public void Initialize()
         {
@@ -78,14 +79,44 @@ namespace SimpleLearning
 
         }
 
-        public int[] Calculate()
+        public int Calculate(int[] inputs)
         {
             Initialize();
             int i = 0;
-            int[] output = new int[4];
-            foreach (LearningSet _learningSet  in _learningSets)
-            {
+            double output;
                 //make all bias neurons be 1
+                _neuron[2].Value = 1;
+                _neuron[5].Value = 1;
+
+                //define input values
+                _neuron[0].Value = inputs[0];   
+                _neuron[1].Value = inputs[1];
+
+                //calculate neurons values in hidden layer
+                _neuron[3].Value = _neuron[0].Value * _neuron[0].Weights[0].WeightValue + _neuron[1].Value * _neuron[1].Weights[0].WeightValue + _neuron[2].Value * _neuron[2].Weights[0].WeightValue;
+                _neuron[3].Activate();
+
+                _neuron[4].Value = _neuron[0].Value * _neuron[0].Weights[1].WeightValue + _neuron[1].Value * _neuron[1].Weights[1].WeightValue + _neuron[2].Value * _neuron[2].Weights[1].WeightValue;
+                _neuron[4].Activate();
+
+                //get output
+                output = Convert.ToInt16(_neuron[3].Value * _neuron[3].Weights[0].WeightValue + _neuron[4].Value * _neuron[4].Weights[0].WeightValue + _neuron[5].Value * _neuron[5].Weights[0].WeightValue);
+                output = Activate(output);
+
+                i++;
+            return Convert.ToInt16(output);
+        }
+
+        public double[] CalculateAndLearn()
+        {
+            Initialize();
+            double[] output = new double[4];
+            double[] errorRate = new double[4];
+
+            int i = 0;
+            foreach (LearningSet _learningSet in _learningSets)
+            {
+                //let all bias neurons be 1
                 _neuron[2].Value = 1;
                 _neuron[5].Value = 1;
 
@@ -95,24 +126,43 @@ namespace SimpleLearning
 
                 //calculate neurons values in hidden layer
                 _neuron[3].Value = _neuron[0].Value * _neuron[0].Weights[0].WeightValue + _neuron[1].Value * _neuron[1].Weights[0].WeightValue + _neuron[2].Value * _neuron[2].Weights[0].WeightValue;
+                _neuron[3].Activate();
+
                 _neuron[4].Value = _neuron[0].Value * _neuron[0].Weights[1].WeightValue + _neuron[1].Value * _neuron[1].Weights[1].WeightValue + _neuron[2].Value * _neuron[2].Weights[1].WeightValue;
+                _neuron[4].Activate();
 
                 //get output
-                output[i] = Convert.ToInt16(_neuron[3].Value * _neuron[3].Weights[0].WeightValue + _neuron[4].Value * _neuron[4].Weights[0].WeightValue + _neuron[5].Value * _neuron[5].Weights[0].WeightValue);
+                output[i] = _neuron[3].Value * _neuron[3].Weights[0].WeightValue + _neuron[4].Value * _neuron[4].Weights[0].WeightValue + _neuron[5].Value * _neuron[5].Weights[0].WeightValue;
+                output[i] = Activate(output[i]);
+
+                //get error total
+                errorRate[i] = Math.Pow(0.5 * (_learningSet.Output[0] - output[i]), 2);
+
+                _neuron[4].Weights[0].DeltaWeight = (output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])) * _neuron[4].Value;
+                _neuron[4].Weights[0].Update(learningRate);
+
+                _neuron[3].Weights[0].DeltaWeight = (output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])) * _neuron[3].Value;
+                _neuron[3].Weights[0].Update(learningRate);
+
+                _neuron[0].Weights[0].DeltaWeight = ;
+
 
                 i++;
             }
-            return output;
-        }
 
-        public void CalculateAndLearn()
-        {
+
         }
 
         void GetPathValues()
         {
             _learningSetPath = Directory.GetCurrentDirectory() + @"/XORSet.json";
             _neuronPath = Directory.GetCurrentDirectory() + @"/XORNeuron.json";
+        }
+
+        double Activate(double output)
+        {
+            output = 1 / (1 + Math.Pow(Math.E, -output));
+            return output;
         }
     }
 }
