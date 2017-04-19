@@ -82,29 +82,28 @@ namespace SimpleLearning
         public int Calculate(int[] inputs)
         {
             Initialize();
-            int i = 0;
             double output;
-                //make all bias neurons be 1
-                _neuron[2].Value = 1;
-                _neuron[5].Value = 1;
 
-                //define input values
-                _neuron[0].Value = inputs[0];   
-                _neuron[1].Value = inputs[1];
+            //let all bias neurons be 1
+            _neuron[2].Value = 1;
+            _neuron[5].Value = 1;
 
-                //calculate neurons values in hidden layer
-                _neuron[3].Value = _neuron[0].Value * _neuron[0].Weights[0].WeightValue + _neuron[1].Value * _neuron[1].Weights[0].WeightValue + _neuron[2].Value * _neuron[2].Weights[0].WeightValue;
-                _neuron[3].Activate();
+            //define input values
+            _neuron[0].Value = inputs[0];
+            _neuron[1].Value = inputs[1];
 
-                _neuron[4].Value = _neuron[0].Value * _neuron[0].Weights[1].WeightValue + _neuron[1].Value * _neuron[1].Weights[1].WeightValue + _neuron[2].Value * _neuron[2].Weights[1].WeightValue;
-                _neuron[4].Activate();
+            //calculate neurons values in hidden layer
+            _neuron[3].Value = _neuron[0].Value * _neuron[0].Weights[0].WeightValue + _neuron[1].Value * _neuron[1].Weights[0].WeightValue + _neuron[2].Value * _neuron[2].Weights[0].WeightValue;
+            _neuron[3].Activate();
 
-                //get output
-                output = Convert.ToInt16(_neuron[3].Value * _neuron[3].Weights[0].WeightValue + _neuron[4].Value * _neuron[4].Weights[0].WeightValue + _neuron[5].Value * _neuron[5].Weights[0].WeightValue);
-                output = Activate(output);
+            _neuron[4].Value = _neuron[0].Value * _neuron[0].Weights[1].WeightValue + _neuron[1].Value * _neuron[1].Weights[1].WeightValue + _neuron[2].Value * _neuron[2].Weights[1].WeightValue;
+            _neuron[4].Activate();
 
-                i++;
-            return Convert.ToInt16(output);
+            //get output
+            output = _neuron[3].Value * _neuron[3].Weights[0].WeightValue + _neuron[4].Value * _neuron[4].Weights[0].WeightValue + _neuron[5].Value * _neuron[5].Weights[0].WeightValue;
+            output = Activate(output);
+            
+            return Convert.ToInt32(output);
         }
 
         public double[] CalculateAndLearn()
@@ -144,13 +143,21 @@ namespace SimpleLearning
                 _neuron[3].Weights[0].DeltaWeight = (output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])) * _neuron[3].Value;
                 _neuron[3].Weights[0].Update(learningRate);
 
-                _neuron[0].Weights[0].DeltaWeight = ;
+                _neuron[0].Weights[0].DeltaWeight = _neuron[0].Value * (_neuron[3].Value * (1.0 - _neuron[3].Value)) * ((output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])));
+                _neuron[0].Weights[0].Update(learningRate);
+                _neuron[0].Weights[1].DeltaWeight = _neuron[0].Value * (_neuron[4].Value * (1.0 - _neuron[4].Value)) * ((output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])));
+                _neuron[0].Weights[1].Update(learningRate);
 
+                _neuron[1].Weights[0].DeltaWeight = _neuron[1].Value * (_neuron[3].Value * (1.0 - _neuron[3].Value)) * ((output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])));
+                _neuron[1].Weights[0].Update(learningRate);
+                _neuron[1].Weights[1].DeltaWeight = _neuron[1].Value * (_neuron[4].Value * (1.0 - _neuron[4].Value)) * ((output[i] - _learningSet.Output[0]) * (output[i] * (1 - output[i])));
+                _neuron[0].Weights[1].Update(learningRate);
 
+                Neuron.Save(_neuron, _neuronPath);
                 i++;
             }
 
-
+            return errorRate;
         }
 
         void GetPathValues()
